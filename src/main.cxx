@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "core/ray.h"
-#include "hittable/hittable.h"
+#include "hittable/sphere.h"
 #include "math/color.h"
 #include "math/vec3.h"
 

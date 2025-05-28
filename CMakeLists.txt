@@ -20,6 +20,7 @@ src/core/ray.h
 
 set(SRC_HITTABLE
 src/hittable/hittable.h
+src/hittable/sphere.h
 )
 
 set(SRC_MAIN
