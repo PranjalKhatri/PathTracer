@@ -21,6 +21,7 @@ src/core/ray.h
 set(SRC_HITTABLE
 src/hittable/hittable.h
 src/hittable/sphere.h
+src/hittable/hittable_list.h
 )
 
 set(SRC_MAIN
@@ -29,6 +30,7 @@ src/main.cxx
 
 set(SOURCES 
     ${SRC_MAIN}
+    src/all_includes.cxx
 )
 add_executable(pathTracer ${SOURCES})
 
