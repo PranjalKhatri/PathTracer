@@ -26,6 +26,7 @@ src/hittable/hittable_list.h
 )
 
 set(SRC_UTIL
+src/util/constants.h
 src/util/rtweekend.h
 src/util/interval.h
 )

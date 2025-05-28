@@ -2,7 +2,6 @@
 #define HITTABLE_H
 
 #include "util/rtweekend.h"
-#include "util/interval.h"
 
 class hit_record {
    public:
