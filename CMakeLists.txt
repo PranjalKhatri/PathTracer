@@ -18,6 +18,10 @@ set(SRC_CORE
 src/core/ray.h
 )
 
+set(SRC_HITTABLE
+src/hittable/hittable.h
+)
+
 set(SRC_MAIN
 src/main.cxx
 )
@@ -30,6 +34,7 @@ add_executable(pathTracer ${SOURCES})
 target_sources(pathTracer PUBLIC
     ${SRC_MATH}
     ${SRC_CORE}
+    ${SRC_HITTABLE}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 target_include_directories(pathTracer PRIVATE
