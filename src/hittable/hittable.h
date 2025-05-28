@@ -2,6 +2,7 @@
 #define HITTABLE_H
 
 #include "util/rtweekend.h"
+#include "util/interval.h"
 
 class hit_record {
    public:
@@ -28,8 +29,7 @@ class hittable {
      * @return bool whether or not the ray hits anything in the specified time
      * interval
      */
-    virtual bool hit(const ray& r, double ray_tmin, double ray_tmax,
-                     hit_record& rec) const = 0;
+    virtual bool hit(const ray& r, interval ray_t, hit_record& rec) const = 0;
     virtual ~hittable() = default;
 };
 
