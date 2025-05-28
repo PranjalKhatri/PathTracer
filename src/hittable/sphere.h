@@ -1,8 +1,8 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+#include "util/rtweekend.h"
 #include "hittable.h"
-#include "math/vec3.h"
 
 class sphere : public hittable {
    public:

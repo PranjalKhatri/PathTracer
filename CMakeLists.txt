@@ -24,6 +24,10 @@ src/hittable/sphere.h
 src/hittable/hittable_list.h
 )
 
+set(SRC_UTIL
+src/util/rtweekend.h
+)
+
 set(SRC_MAIN
 src/main.cxx
 )
@@ -38,6 +42,7 @@ target_sources(pathTracer PUBLIC
     ${SRC_MATH}
     ${SRC_CORE}
     ${SRC_HITTABLE}
+    ${SRC_UTIL}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 target_include_directories(pathTracer PRIVATE

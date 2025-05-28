@@ -1,7 +1,7 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "core/ray.h"
+#include "util/rtweekend.h"
 
 class hit_record {
    public:
