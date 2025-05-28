@@ -16,6 +16,7 @@ src/math/color.h
 
 set(SRC_CORE 
 src/core/ray.h
+src/core/camera.h
 )
 
 set(SRC_HITTABLE

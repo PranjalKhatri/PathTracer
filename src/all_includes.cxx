@@ -8,3 +8,4 @@
 #include "math/vec3.h"
 #include "util/rtweekend.h"
 #include "util/interval.h"
+#include "core/camera.h"
