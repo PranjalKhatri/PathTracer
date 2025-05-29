@@ -14,6 +14,11 @@ class interval {
     double size() const { return max - min; }
     bool contains(double x) const { return min <= x && x <= max; }
     bool surrounds(double x) const { return min < x && x < max; }
+    double clamp(double x) const {
+        if (x < min) x = min;
+        if (x > max) x = max;
+        return x;
+    }
     static const interval empty, universe;
 };
 inline const interval interval::empty = interval(+infinity, -infinity);
