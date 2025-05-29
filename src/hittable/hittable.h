@@ -8,7 +8,7 @@ class material;
 class hit_record {
    public:
     point3 hit_point;
-    vec3 normal;
+    vec3 normal;    //  unit normal vector
     double t;
     bool front_face;
     shared_ptr<material> mat;    //  set by the object called by ray color
