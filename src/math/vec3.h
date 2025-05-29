@@ -41,6 +41,17 @@ class vec3 {
     double length_squared() const {
         return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
     }
+
+    ///  @brief: returns vec3 with coords in [0,1)
+    static vec3 random() {
+        return vec3(random_double(), random_double(), random_double());
+    }
+
+    ///@brief : returns random vector with all coords in [min,max)
+    static vec3 random(double min, double max) {
+        return vec3(random_double(min, max), random_double(min, max),
+                    random_double(min, max));
+    }
 };
 
 //  alias of vec3,just for geometric clarity
@@ -92,5 +103,23 @@ inline vec3 random_in_unit_disk() {
         auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
         if (p.length_squared() < 1) return p;
     }
+}
+
+inline vec3 random_in_unit_sphere() {
+    while (true) {
+        auto p = vec3::random(-1, 1);
+        if (p.length_squared() < 1) return p;
+    }
+}
+inline vec3 random_unit_vector() {
+    return unit_vector(random_in_unit_sphere());
+}
+inline vec3 random_on_hemisphere(const vec3& normal) {
+    vec3 on_unit_sphere = random_unit_vector();
+    if (dot(on_unit_sphere, normal) >
+        0.0)    //  In the same hemisphere as the normal
+        return on_unit_sphere;
+    else
+        return -on_unit_sphere;
 }
 #endif
