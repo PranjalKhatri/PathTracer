@@ -12,3 +12,4 @@
 #include "materials/lambertian.h"
 #include "materials/metal.h"
 #include "materials/dielectric.h"
+#include "scenes/scene.h"

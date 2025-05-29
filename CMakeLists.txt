@@ -14,6 +14,10 @@ src/math/vec3.h
 src/math/color.h
 )
 
+set(SRC_SCENES
+src/scenes/scene.h
+)
+
 set(SRC_CORE 
 src/core/ray.h
 src/core/camera.h
@@ -32,6 +36,13 @@ src/util/interval.h
 src/util/random_util.h
 )
 
+set(SRC_MATERIAL
+src/materials/material.h
+src/materials/lambertian.h
+src/materials/metal.h
+src/materials/dielectric.h
+)
+
 set(SRC_MAIN
 src/main.cxx
 )
@@ -41,12 +52,6 @@ set(SOURCES
     src/all_includes.cxx
 )
 
-set(SRC_MATERIAL
-src/materials/material.h
-src/materials/lambertian.h
-src/materials/metal.h
-src/materials/dielectric.h
-)
 
 add_executable(pathTracer ${SOURCES})
 
