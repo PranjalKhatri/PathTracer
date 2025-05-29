@@ -5,6 +5,7 @@
 #include "materials/lambertian.h"
 #include "materials/metal.h"
 #include "hittable/sphere.h"
+#include "materials/dielectric.h"
 
 void metal_spheres(hittable_list& world) {
     auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
