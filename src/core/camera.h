@@ -10,6 +10,7 @@ class camera {
     int image_width = 100;        //  Rendered image width in pixel count
     int samples_per_pixel =
         10;    //  Count of random samples per pixel used for anti-aliasing
+    int max_depth = 10;    //  Maximum number of ray bounces into scene
 
    public:
     void render(const hittable& world) {
@@ -26,8 +27,9 @@ class camera {
                 color pixel_color{0, 0, 0};
                 for (int sample = 0; sample < samples_per_pixel; sample++) {
                     ray r = get_ray(i, j);
-                    pixel_color += ray_color(
-                        r, world);    //  average out later while writing
+                    pixel_color +=
+                        ray_color(r, max_depth,
+                                  world);    //  average out later while writing
                 }
                 write_color(std::cout, m_pixel_samples_scale * pixel_color);
             }
@@ -100,10 +102,13 @@ class camera {
     vec3 sample_disk(double radius = 1.0) const {
         return radius * random_in_unit_disk();
     }
-    color ray_color(const ray& r, const hittable& world) const {
+    color ray_color(const ray& r, int depth, const hittable& world) const {
+        if (depth <= 0) return ColorConstants::BLACK;
         hit_record rec;
         if (world.hit(r, interval(0, infinity), rec)) {
-            return 0.5 * (rec.normal + color(1, 1, 1));
+            vec3 direction = random_on_hemisphere(rec.normal);
+            return 0.5 *
+                   ray_color(ray(rec.hit_point, direction), depth - 1, world);
         }
         vec3 unit_direction = unit_vector(r.direction());
         auto a = 0.5 * (unit_direction.y() + 1.0);
