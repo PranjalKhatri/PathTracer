@@ -40,6 +40,11 @@ set(SOURCES
     ${SRC_MAIN}
     src/all_includes.cxx
 )
+
+set(SRC_MATERIAL
+src/materials/material.h
+)
+
 add_executable(pathTracer ${SOURCES})
 
 target_sources(pathTracer PUBLIC
@@ -47,6 +52,7 @@ target_sources(pathTracer PUBLIC
     ${SRC_CORE}
     ${SRC_HITTABLE}
     ${SRC_UTIL}
+    ${SRC_MATERIAL}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 target_include_directories(pathTracer PRIVATE

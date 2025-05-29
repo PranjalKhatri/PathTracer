@@ -8,3 +8,5 @@
 #include "math/color.h"
 #include "math/vec3.h"
 #include "core/camera.h"
+#include "materials/material.h"
+#include "materials/lambertian.h"
