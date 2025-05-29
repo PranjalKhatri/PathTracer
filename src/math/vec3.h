@@ -83,6 +83,10 @@ inline vec3 cross(const vec3& u, const vec3& v) {
 
 inline vec3 unit_vector(const vec3& v) { return v / v.length(); }
 
+///  @brief Returns a random point in the unit disk centered at (0,0)
+///  TODO: Try out different methods involving other trig functions and inverse
+///  probability function
+///  https://stackoverflow.com/questions/5837572/generate-a-random-point-within-a-circle-uniformly
 inline vec3 random_in_unit_disk() {
     while (true) {
         auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
