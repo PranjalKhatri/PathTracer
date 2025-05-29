@@ -1,25 +1,33 @@
 #include "util/rtweekend.h"
 
 #include "core/camera.h"
-#include "hittable/hittable.h"
 #include "hittable/hittable_list.h"
 #include "materials/lambertian.h"
+#include "materials/metal.h"
 #include "hittable/sphere.h"
+
+void metal_spheres(hittable_list& world) {
+    auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
+    auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
+    auto material_left = make_shared<metal>(color(0.8, 0.8, 0.8));
+    auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
+    world.add(
+        make_shared<sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
+    world.add(
+        make_shared<sphere>(point3(0.0, 0.0, -1.2), 0.5, material_center));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
+    world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
+}
 
 int main() {
     hittable_list world;
-
-    auto mat_lamb_green = make_shared<lambertian>(ColorConstants::GREEN);
-
-    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5, mat_lamb_green));
-    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100, mat_lamb_green));
-
+    metal_spheres(world);
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0;
     cam.image_width = 400;
     cam.samples_per_pixel = 100;
-    cam.max_depth = 50;
+    cam.max_depth = 5;
 
     cam.render(world);
 }
