@@ -43,6 +43,7 @@ set(SOURCES
 
 set(SRC_MATERIAL
 src/materials/material.h
+src/materials/lambertian.h
 )
 
 add_executable(pathTracer ${SOURCES})
