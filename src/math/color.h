@@ -6,6 +6,14 @@
 //(r,g,b): r,g,b E [0,1]
 using color = vec3;
 
+struct ColorConstants {
+    static constexpr vec3 BLACK{0.0, 0.0, 0.0};
+    static constexpr vec3 WHITE{1.0, 1.0, 1.0};
+    static constexpr vec3 RED{1.0, 0.0, 0.0};
+    static constexpr vec3 GREEN{0.0, 1.0, 0.0};
+    static constexpr vec3 BLUE{0.0, 0.0, 1.0};
+};
+
 inline void write_color(std::ostream& out, const color& pixel_color) {
     auto r = pixel_color.x();
     auto g = pixel_color.y();
