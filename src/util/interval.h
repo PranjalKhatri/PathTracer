@@ -1,7 +1,7 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
-#include "rtweekend.h"
+#include "constants.h"
 
 class interval {
    public:
