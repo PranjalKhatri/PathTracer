@@ -8,6 +8,8 @@ class camera {
    public:
     double aspect_ratio = 1.0;    //  Ratio of image width over height
     int image_width = 100;        //  Rendered image width in pixel count
+    int samples_per_pixel =
+        10;    //  Count of random samples per pixel used for anti-aliasing
 
    public:
     void render(const hittable& world) {
@@ -21,11 +23,12 @@ class camera {
                       << ' ' << std::flush;
 
             for (int i = 0; i < image_width; i++) {
-                auto pixel_center = m_pixel00_loc + (i * m_pixel_delta_u) +
-                                    (j * m_pixel_delta_v);
-                auto ray_direction = pixel_center - m_center;
-                ray r(m_center, ray_direction);
-                color pixel_color = ray_color(r, world);
+                color pixel_color{0, 0, 0};
+                for (int sample = 0; sample < samples_per_pixel; sample++) {
+                    ray r = get_ray(i, j);
+                    pixel_color += ray_color(
+                        r, world);    //  average out later while writing
+                }
                 write_color(std::cout, pixel_color);
             }
         }
@@ -34,16 +37,22 @@ class camera {
     }
 
    private:
-    int m_image_height;      //  Rendered image height
-    point3 m_center;         //  Camera center
-    point3 m_pixel00_loc;    //  Location of pixel 0, 0
-    vec3 m_pixel_delta_u;    //  Offset to pixel to the right
-    vec3 m_pixel_delta_v;    //  Offset to pixel below
+    int m_image_height;    //  Rendered image height
+    double
+        m_pixel_samples_scale;    //  Color scale factor for a sum of pixel
+                                  //  samples (avoid division multiple times )
+    point3 m_center;              //  Camera center
+    point3 m_pixel00_loc;         //  Location of pixel 0, 0
+    vec3 m_pixel_delta_u;         //  Offset to pixel to the right
+    vec3 m_pixel_delta_v;         //  Offset to pixel below
 
    private:
     void initialize() {
-        m_image_height = int(image_width / aspect_ratio);
+        m_image_height = static_cast<int>(image_width / aspect_ratio);
         m_image_height = (m_image_height < 1) ? 1 : m_image_height;
+
+        m_pixel_samples_scale = 1.0 / samples_per_pixel;
+
         m_center = point3(0, 0, 0);
 
         //  Determine viewport dimensions.
@@ -70,6 +79,22 @@ class camera {
             viewport_upper_left + 0.5 * (m_pixel_delta_u + m_pixel_delta_v);
     }
 
+    ///  @brief: Construct a camera ray originating from the origin and directed
+    ///  at randomly sampled point around the pixel location i, j.
+    ray get_ray(int i, int j) const {
+        auto offset = sample_square();
+        auto pixel_sample = m_pixel00_loc +
+                            ((i + offset.x()) * m_pixel_delta_u) +
+                            ((j + offset.y()) * m_pixel_delta_v);
+        auto ray_origin = m_center;
+        auto ray_direction = pixel_sample - ray_origin;
+        return ray(ray_origin, ray_direction);
+    }
+    ///  @brief: Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5]
+    ///  unit square
+    vec3 sample_square() const {
+        return vec3(random_double() - 0.5, random_double() - 0.5, 0);
+    }
     color ray_color(const ray& r, const hittable& world) const {
         hit_record rec;
         if (world.hit(r, interval(0, infinity), rec)) {

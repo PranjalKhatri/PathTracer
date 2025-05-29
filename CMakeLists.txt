@@ -29,6 +29,7 @@ set(SRC_UTIL
 src/util/constants.h
 src/util/rtweekend.h
 src/util/interval.h
+src/util/random_util.h
 )
 
 set(SRC_MAIN
