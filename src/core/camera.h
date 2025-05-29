@@ -29,7 +29,7 @@ class camera {
                     pixel_color += ray_color(
                         r, world);    //  average out later while writing
                 }
-                write_color(std::cout, pixel_color);
+                write_color(std::cout, m_pixel_samples_scale * pixel_color);
             }
         }
 
@@ -82,7 +82,7 @@ class camera {
     ///  @brief: Construct a camera ray originating from the origin and directed
     ///  at randomly sampled point around the pixel location i, j.
     ray get_ray(int i, int j) const {
-        auto offset = sample_square();
+        auto offset = sample_disk();
         auto pixel_sample = m_pixel00_loc +
                             ((i + offset.x()) * m_pixel_delta_u) +
                             ((j + offset.y()) * m_pixel_delta_v);
@@ -94,6 +94,11 @@ class camera {
     ///  unit square
     vec3 sample_square() const {
         return vec3(random_double() - 0.5, random_double() - 0.5, 0);
+    }
+    //  Returns a random point in the unit (radius 0.5) disk centered at the
+    //  origin.
+    vec3 sample_disk(double radius = 1.0) const {
+        return radius * random_in_unit_disk();
     }
     color ray_color(const ray& r, const hittable& world) const {
         hit_record rec;
