@@ -10,3 +10,4 @@
 #include "core/camera.h"
 #include "materials/material.h"
 #include "materials/lambertian.h"
+#include "materials/metal.h"
