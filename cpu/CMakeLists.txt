@@ -61,7 +61,7 @@ src/main.cxx
 
 set(SOURCES 
     ${SRC_MAIN}
-    src/all_includes.cxx
+    # src/all_includes.cxx
 )
 
 set(SRC_EXTERNAL
@@ -82,6 +82,10 @@ target_sources(pathTracer PUBLIC
     ${SRC_ACCELERATION}
     ${SRC_EXTERNAL}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
+)
+include_directories(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/lib
 )
 target_include_directories(pathTracer PRIVATE
     ${CMAKE_SOURCE_DIR}/src
