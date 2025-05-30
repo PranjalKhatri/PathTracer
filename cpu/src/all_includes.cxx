@@ -18,3 +18,4 @@
 #include "materials/textures/texture.h"
 #include "materials/textures/solid_color.h"
 #include "materials/textures/checker.h"
+#include "external/stb/stb_image.h"

@@ -63,6 +63,9 @@ set(SOURCES
     src/all_includes.cxx
 )
 
+set(SRC_EXTERNAL
+lib/external/stb/stb_image.h
+)
 
 add_executable(pathTracer ${SOURCES})
 
@@ -75,8 +78,10 @@ target_sources(pathTracer PUBLIC
     ${SRC_TEXTURE}
     ${SRC_SCENES}
     ${SRC_ACCELERATION}
+    ${SRC_EXTERNAL}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 target_include_directories(pathTracer PRIVATE
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/lib
 )
