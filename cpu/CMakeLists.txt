@@ -43,6 +43,11 @@ src/materials/metal.h
 src/materials/dielectric.h
 )
 
+set(SRC_TEXTURE
+src/materials/textures/texture.h
+src/materials/textures/solid_color.h
+)
+
 set(SRC_ACCELERATION
 src/acceleration/bvh/aabb.h
 src/acceleration/bvh/bvh.h
@@ -66,6 +71,7 @@ target_sources(pathTracer PUBLIC
     ${SRC_HITTABLE}
     ${SRC_UTIL}
     ${SRC_MATERIAL}
+    ${SRC_TEXTURE}
     ${SRC_SCENES}
     ${SRC_ACCELERATION}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs

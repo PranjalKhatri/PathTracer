@@ -15,3 +15,5 @@
 #include "scenes/scene.h"
 #include "acceleration/bvh/aabb.h"
 #include "acceleration/bvh/bvh.h"
+#include "materials/textures/texture.h"
+#include "materials/textures/solid_color.h"
