@@ -96,8 +96,8 @@ inline void main_scene(hittable_list& world, camera& cam) {
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
     cam.aspect_ratio = 16.0 / 9.0;
     cam.image_width = 1200;
-    cam.samples_per_pixel = 500;
-    cam.max_depth = 50;
+    cam.samples_per_pixel = 5;
+    cam.max_depth = 5;
     cam.vfov = 20;
     cam.lookfrom = point3(13, 2, 3);
     cam.lookat = point3(0, 0, 0);

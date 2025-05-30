@@ -61,6 +61,7 @@ target_sources(pathTracer PUBLIC
     ${SRC_HITTABLE}
     ${SRC_UTIL}
     ${SRC_MATERIAL}
+    ${SRC_SCENES}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 target_include_directories(pathTracer PRIVATE
