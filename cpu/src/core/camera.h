@@ -118,7 +118,8 @@ class camera {
         auto ray_origin = (defocus_angle <= 0) ? m_center
                                                : defocus_disk_sample();
         auto ray_direction = pixel_sample - ray_origin;
-        return ray(ray_origin, ray_direction);
+        auto ray_time = random_double();
+        return ray(ray_origin, ray_direction, ray_time);
     }
     ///  @brief: Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5]
     ///  unit square

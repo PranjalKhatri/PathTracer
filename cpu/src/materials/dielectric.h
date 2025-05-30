@@ -23,10 +23,8 @@ class dielectric : public material {
             direction = reflect(unit_direction, rec.normal);
         else
             direction = refract(unit_direction, rec.normal, ri);
-        scattered = ray(rec.hit_point, direction);
 
-        vec3 refracted = refract(unit_direction, rec.normal, ri);
-        scattered = ray(rec.hit_point, refracted);
+        scattered = ray(rec.hit_point, direction, r_in.time());
         return true;
     }
 
