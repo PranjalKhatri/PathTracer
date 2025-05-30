@@ -47,6 +47,7 @@ set(SRC_TEXTURE
 src/materials/textures/texture.h
 src/materials/textures/solid_color.h
 src/materials/textures/checker.h
+src/materials/textures/image.h
 )
 
 set(SRC_ACCELERATION
