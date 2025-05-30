@@ -14,3 +14,4 @@
 #include "materials/dielectric.h"
 #include "scenes/scene.h"
 #include "acceleration/bvh/aabb.h"
+#include "acceleration/bvh/bvh.h"

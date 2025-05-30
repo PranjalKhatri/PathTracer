@@ -19,6 +19,14 @@ class aabb {
         y = (a[1] <= b[1]) ? interval(a[1], b[1]) : interval(b[1], a[1]);
         z = (a[2] <= b[2]) ? interval(a[2], b[2]) : interval(b[2], a[2]);
     }
+    //  creates a new bounding box tightly enclosing the given two bounding
+    //  boxed
+    aabb(const aabb& box0, const aabb& box1) {
+        //  create tight interval for each axis
+        x = interval(box0.x, box1.x);
+        y = interval(box0.y, box1.y);
+        z = interval(box0.z, box1.z);
+    }
 
     ///  0: x, 1: y, 2: z
     const interval& axis_interval(int n) const {

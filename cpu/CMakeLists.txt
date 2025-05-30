@@ -45,6 +45,7 @@ src/materials/dielectric.h
 
 set(SRC_ACCELERATION
 src/acceleration/bvh/aabb.h
+src/acceleration/bvh/bvh.h
 )
 
 set(SRC_MAIN
