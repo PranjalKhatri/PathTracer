@@ -12,7 +12,7 @@ class hittable_list : public hittable {
 
    public:
     hittable_list() {}
-    hittable_list(shared_ptr<hittable> object) : objects{object} {}
+    hittable_list(shared_ptr<hittable> object) { add(object); }
 
     void clear() { objects.clear(); }
     void add(shared_ptr<hittable> object) {

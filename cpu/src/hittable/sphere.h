@@ -1,6 +1,7 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+#include "acceleration/bvh/bvh.h"
 #include "acceleration/bvh/aabb.h"
 #include "util/rtweekend.h"
 #include "hittable.h"
