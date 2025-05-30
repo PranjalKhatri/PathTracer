@@ -13,7 +13,7 @@ class hit_record {
     double t;
     bool front_face;
     shared_ptr<material> mat;    //  set by the object called by ray color
-
+    double u, v;                 //  texture co-ordinates
     void set_face_normal(const ray& r, const vec3& outward_normal) {
         //  Sets the hit record normal vector.
         //  NOTE: the parameter `outward_normal` is assumed to have unit length.

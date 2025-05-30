@@ -46,6 +46,7 @@ src/materials/dielectric.h
 set(SRC_TEXTURE
 src/materials/textures/texture.h
 src/materials/textures/solid_color.h
+src/materials/textures/checker.h
 )
 
 set(SRC_ACCELERATION

@@ -17,3 +17,4 @@
 #include "acceleration/bvh/bvh.h"
 #include "materials/textures/texture.h"
 #include "materials/textures/solid_color.h"
+#include "materials/textures/checker.h"
