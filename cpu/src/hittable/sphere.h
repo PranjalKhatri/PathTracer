@@ -52,6 +52,7 @@ class sphere : public hittable {
         rec.hit_point = r.at(rec.t);
         vec3 outward_normal = (rec.hit_point - center) / m_radius;
         rec.set_face_normal(r, outward_normal);
+        get_sphere_uv(outward_normal, rec.u, rec.v);
         rec.mat = m_mat;
         return true;
     }
@@ -69,6 +70,24 @@ class sphere : public hittable {
     //  where t=0 yields center1, and t=1 yields center2.
     point3 sphere_center(double time) const {
         return m_center1 + time * m_center_vec;
+    }
+    /*  p: a given point on the sphere of radius one, centered at the
+     * origin.
+     * u: returned value [0,1] of angle around the Y axis from
+     * X=-1.
+     * v: returned value [0,1] of angle from Y=-1 to Y=+1.
+     *
+     *     <1 0 0> yields <0.50 0.50>       < -1  0  0> yields <0.00 0.50>
+     *
+     *     <0 1 0> yields <0.50 1.00>       <  0 -1  0> yields <0.50 0.00>
+     *
+     *     <0 0 1> yields <0.25 0.50>       <  0  0 -1> yields <0.75 0.50>
+     */
+    static void get_sphere_uv(const point3& p, double& u, double& v) {
+        auto theta = acos(-p.y());
+        auto phi = atan2(-p.z(), p.x()) + pi;
+        u = phi / (2 * pi);
+        v = theta / pi;
     }
 };
 #endif
