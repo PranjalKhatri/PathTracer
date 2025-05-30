@@ -13,3 +13,4 @@
 #include "materials/metal.h"
 #include "materials/dielectric.h"
 #include "scenes/scene.h"
+#include "acceleration/bvh/aabb.h"

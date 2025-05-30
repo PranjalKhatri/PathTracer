@@ -43,6 +43,10 @@ src/materials/metal.h
 src/materials/dielectric.h
 )
 
+set(SRC_ACCELERATION
+src/acceleration/bvh/aabb.h
+)
+
 set(SRC_MAIN
 src/main.cxx
 )
@@ -62,6 +66,7 @@ target_sources(pathTracer PUBLIC
     ${SRC_UTIL}
     ${SRC_MATERIAL}
     ${SRC_SCENES}
+    ${SRC_ACCELERATION}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 target_include_directories(pathTracer PRIVATE
