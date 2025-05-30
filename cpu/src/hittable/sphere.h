@@ -1,6 +1,7 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+#include "acceleration/bvh/aabb.h"
 #include "util/rtweekend.h"
 #include "hittable.h"
 
@@ -11,7 +12,10 @@ class sphere : public hittable {
         : m_center1(center),
           m_radius(fmax(0, radius)),
           m_mat(mat),
-          m_is_moving(false) {}
+          m_is_moving(false) {
+        auto rvec = vec3(radius, radius, radius);
+        m_bbox = aabb(m_center1 - rvec, m_center1 + rvec);
+    }
     //  Moving Sphere
     sphere(const point3& center1, const point3& center2, double radius,
            shared_ptr<material> mat)
@@ -20,6 +24,10 @@ class sphere : public hittable {
           m_mat(mat),
           m_is_moving(true) {
         m_center_vec = center2 - center1;
+        auto rvec = vec3(radius, radius, radius);
+        aabb box1(center1 - rvec, center1 + rvec);
+        aabb box2(center2 - rvec, center2 + rvec);
+        m_bbox = aabb(box1, box2);
     }
     bool hit(const ray& r, interval ray_t, hit_record& rec) const override {
         auto center = m_is_moving ? sphere_center(r.time()) : m_center1;
@@ -46,6 +54,7 @@ class sphere : public hittable {
         rec.mat = m_mat;
         return true;
     }
+    aabb bounding_box() const override { return m_bbox; }
 
    private:
     point3 m_center1;
@@ -53,6 +62,7 @@ class sphere : public hittable {
     shared_ptr<material> m_mat;
     bool m_is_moving;
     vec3 m_center_vec;
+    aabb m_bbox;
 
     //  Linearly interpolate from center1 to center2 according to time,
     //  where t=0 yields center1, and t=1 yields center2.
