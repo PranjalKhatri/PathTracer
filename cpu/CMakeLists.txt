@@ -65,6 +65,7 @@ set(SOURCES
 
 set(SRC_EXTERNAL
 lib/external/stb/stb_image.h
+lib/external/stb/rtw_stb_image.h
 )
 
 add_executable(pathTracer ${SOURCES})
