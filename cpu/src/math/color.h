@@ -2,7 +2,7 @@
 #define COLOR_H
 
 #include "util/interval.h"
-#include "math/vec3.h"
+#include "vec3.h"
 //(r,g,b): r,g,b E [0,1]
 using color = vec3;
 
