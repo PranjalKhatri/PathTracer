@@ -24,3 +24,4 @@
 #include "materials/textures/noise_texture.h"
 #include "math/noise/perlin.h"
 #include "hittable/quad.h"
+#include "materials/lights/diffuse_light.h"

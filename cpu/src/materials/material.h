@@ -12,5 +12,8 @@ class material {
                          color& attenuation, ray& scattered) const {
         return false;
     }
+    virtual color emitted(double u, double v, const point3& p) const {
+        return ColorConstants::BLACK;
+    }
 };
 #endif
