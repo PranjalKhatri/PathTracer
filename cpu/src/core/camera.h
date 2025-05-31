@@ -42,7 +42,7 @@ class camera {
                 write_color(std::cout, m_pixel_samples_scale * pixel_color);
             }
         }
-
+        std::cout.flush();
         std::clog << "\rDone.                 \n";
     }
 
