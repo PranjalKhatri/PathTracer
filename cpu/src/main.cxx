@@ -1,16 +1,4 @@
 #include "scenes/scene.h"
 #include "all_includes.h"
 
-int main() {
-    hittable_list world;
-
-    camera cam;
-    //  main_scene(world, cam);
-    //  checkered_spheres(world, cam);
-    //  earth(world, cam);
-    //  perlin_spheres(world, cam);
-    //  quads(world, cam);
-    //  simple_light(world, cam);
-    cornell_box(world, cam);
-    cam.render(world);
-}
+int main() { final_scene(400, 50, 20); }
