@@ -71,3 +71,4 @@ class quad : public hittable {
     double D;       //  v.n=D
 };
 #endif
+//  TODO: Add triagles,rings,disks...
