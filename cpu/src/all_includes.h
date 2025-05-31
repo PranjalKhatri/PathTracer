@@ -26,3 +26,5 @@
 #include "hittable/quad.h"
 #include "materials/lights/diffuse_light.h"
 #include "hittable/transform.h"
+#include "hittable/constant_medium.h"
+#include "materials/isotropic.h"
