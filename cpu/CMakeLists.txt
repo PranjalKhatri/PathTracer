@@ -12,6 +12,7 @@ project(PathTracer
 set(SRC_MATH 
 src/math/vec3.h
 src/math/color.h
+src/math/noise/perlin.h
 )
 
 set(SRC_SCENES
@@ -61,7 +62,6 @@ src/main.cxx
 
 set(SOURCES 
     ${SRC_MAIN}
-    # src/all_includes.cxx
 )
 
 set(SRC_EXTERNAL
