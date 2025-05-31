@@ -8,6 +8,7 @@ int main() {
     //  main_scene(world, cam);
     //  checkered_spheres(world, cam);
     //  earth(world, cam);
-    perlin_spheres(world, cam);
+    //  perlin_spheres(world, cam);
+    quads(world, cam);
     cam.render(world);
 }
