@@ -151,7 +151,7 @@ inline void earth(hittable_list& world, camera& cam) {
     cam.defocus_angle = 0;
 }
 inline void perlin_spheres(hittable_list& world, camera& cam) {
-    auto pertext = make_shared<noise_texture>();
+    auto pertext = make_shared<noise_texture>(4);
     world.add(make_shared<sphere>(point3(0, -1000, 0), 1000,
                                   make_shared<lambertian>(pertext)));
     world.add(make_shared<sphere>(point3(0, 2, 0), 2,
