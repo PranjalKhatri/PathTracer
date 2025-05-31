@@ -20,4 +20,6 @@
 #include "materials/textures/checker.h"
 //  #include "external/stb/stb_image.h"
 //  #include "external/stb/rtw_stb_image.h"
-//  #include "materials/textures/image.h"
+#include "materials/textures/image.h"
+#include "materials/textures/noise_texture.h"
+#include "math/noise/perlin.h"
