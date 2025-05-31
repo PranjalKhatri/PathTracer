@@ -28,6 +28,8 @@ set(SRC_HITTABLE
 src/hittable/hittable.h
 src/hittable/sphere.h
 src/hittable/hittable_list.h
+src/hittable/quad.h
+src/hittable/transform.h
 )
 
 set(SRC_UTIL
@@ -42,6 +44,10 @@ src/materials/material.h
 src/materials/lambertian.h
 src/materials/metal.h
 src/materials/dielectric.h
+)
+
+set(SRC_LIGHTS
+src/materials/lights/diffuse_light.h
 )
 
 set(SRC_TEXTURE
@@ -81,6 +87,7 @@ target_sources(pathTracer PUBLIC
     ${SRC_SCENES}
     ${SRC_ACCELERATION}
     ${SRC_EXTERNAL}
+    ${SRC_LIGHTS}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
 include_directories(

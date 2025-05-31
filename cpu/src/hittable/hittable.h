@@ -36,5 +36,4 @@ class hittable {
     virtual aabb bounding_box() const = 0;
     virtual ~hittable() = default;
 };
-
 #endif
