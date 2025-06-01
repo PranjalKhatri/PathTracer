@@ -5,6 +5,7 @@
 #include "hittable/hittable.h"
 #include "materials/material.h"
 
+#include <fstream>
 #include <thread>
 #include <mutex>
 #include <chrono>
@@ -25,11 +26,19 @@ class camera {
     double focus_dist =
         10;    //  Distance from camera lookfrom point to plane of perfect focus
     color background;    //  Scene background color
+    std::string out_file = "tracer_image_out.ppm";
+
    public:
     void render(const hittable& world, bool show_progress = true) {
+        std::ofstream _out(out_file);
+        if (!_out.is_open()) {
+            std::cerr << "Failed to open output file" << out_file
+                      << "\n dumping to std::cout\n";
+        }
+
+        std::ostream& out = _out.is_open() ? _out : std::cout;
         initialize();
-        std::cout << "P3\n"
-                  << image_width << ' ' << m_image_height << "\n255\n";
+        out << "P3\n" << image_width << ' ' << m_image_height << "\n255\n";
 
         //  Pre-allocate buffer for all pixel colors
         std::vector<color> pixel_buffer(image_width * m_image_height);
@@ -92,7 +101,7 @@ class camera {
 
         for (int j = 0; j < m_image_height; j++) {
             for (int i = 0; i < image_width; i++) {
-                write_color(std::cout, pixel_buffer[j * image_width + i]);
+                write_color(out, pixel_buffer[j * image_width + i]);
             }
         }
 
