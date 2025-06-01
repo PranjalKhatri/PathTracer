@@ -90,6 +90,30 @@ target_sources(pathTracer PUBLIC
     ${SRC_LIGHTS}
     # You don't usually add headers here unless you have header-only files or want them listed for IDEs
 )
+
+# Optimized release target with O3 and fast math
+add_executable(pathTracerOptimized ${SOURCES})
+target_sources(pathTracerOptimized PUBLIC
+    ${SRC_MATH}
+    ${SRC_CORE}
+    ${SRC_HITTABLE}
+    ${SRC_UTIL}
+    ${SRC_MATERIAL}
+    ${SRC_TEXTURE}
+    ${SRC_SCENES}
+    ${SRC_ACCELERATION}
+    ${SRC_EXTERNAL}
+    ${SRC_LIGHTS}
+)
+
+# Set optimization flags for the optimized target
+target_compile_options(pathTracerOptimized PRIVATE
+    -O3
+    -ffast-math
+    -march=native
+    -DNDEBUG
+)
+
 include_directories(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/lib
