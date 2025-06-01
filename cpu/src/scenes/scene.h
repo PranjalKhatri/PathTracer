@@ -19,7 +19,7 @@
 #include "materials/dielectric.h"
 #include "materials/textures/checker.h"
 
-inline void metal_spheres(hittable_list& world, camera& cam) {
+inline void metal_spheres(hittable_list& world, camera& cam, std::string _out) {
     auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
     auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
     auto material_left = make_shared<dielectric>(1.50);
@@ -38,8 +38,9 @@ inline void metal_spheres(hittable_list& world, camera& cam) {
     cam.image_width = 400;
     cam.samples_per_pixel = 100;
     cam.max_depth = 50;
+    cam.out_file = _out;
 }
-inline void distant_view(hittable_list& world, camera& cam) {
+inline void distant_view(hittable_list& world, camera& cam, std::string _out) {
     auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
     auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
     auto material_left = make_shared<dielectric>(1.50);
@@ -63,8 +64,9 @@ inline void distant_view(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
     cam.defocus_angle = 10.0;
     cam.focus_dist = 3.4;
+    cam.out_file = _out;
 }
-inline void main_scene(hittable_list& world, camera& cam) {
+inline void main_scene(hittable_list& world, camera& cam, std::string _out) {
     //  auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
     //  world.add(make_shared<sphere>(point3(0, -1000, 0), 1000,
     //  ground_material));
@@ -121,6 +123,7 @@ inline void main_scene(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
     cam.defocus_angle = 0.6;
     cam.focus_dist = 10.0;
+    cam.out_file = _out;
 }
 inline void checkered_spheres(hittable_list& world, camera& cam) {
     auto checker = make_shared<checker_texture>(0.32, color(.2, .3, .1),
@@ -140,7 +143,7 @@ inline void checkered_spheres(hittable_list& world, camera& cam) {
     cam.defocus_angle = 0;
     cam.background = color(0.70, 0.80, 1.00);
 }
-inline void earth(hittable_list& world, camera& cam) {
+inline void earth(hittable_list& world, camera& cam, std::string _out) {
     auto earth_texture = make_shared<image_texture>("earthmap.jpg");
     auto earth_surface = make_shared<lambertian>(earth_texture);
     auto globe = make_shared<sphere>(point3(0, 0, 0), 2, earth_surface);
@@ -155,8 +158,10 @@ inline void earth(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
     cam.defocus_angle = 0;
     cam.background = color(0.70, 0.80, 1.00);
+    cam.out_file = _out;
 }
-inline void perlin_spheres(hittable_list& world, camera& cam) {
+inline void perlin_spheres(hittable_list& world, camera& cam,
+                           std::string _out) {
     auto pertext = make_shared<noise_texture>(4);
     world.add(make_shared<sphere>(point3(0, -1000, 0), 1000,
                                   make_shared<lambertian>(pertext)));
@@ -172,8 +177,9 @@ inline void perlin_spheres(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
     cam.defocus_angle = 0;
     cam.background = color(0.70, 0.80, 1.00);
+    cam.out_file = _out;
 }
-inline void quads(hittable_list& world, camera& cam) {
+inline void quads(hittable_list& world, camera& cam, std::string _out) {
     //  Materials
     auto left_red = make_shared<lambertian>(color(1.0, 0.2, 0.2));
     auto back_green = make_shared<lambertian>(color(0.2, 1.0, 0.2));
@@ -201,8 +207,9 @@ inline void quads(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
     cam.defocus_angle = 0;
     cam.background = color(0.70, 0.80, 1.00);
+    cam.out_file = _out;
 }
-inline void simple_light(hittable_list& world, camera& cam) {
+inline void simple_light(hittable_list& world, camera& cam, std::string _out) {
     auto pertext = make_shared<noise_texture>(4);
     world.add(make_shared<sphere>(point3(0, -1000, 0), 1000,
                                   make_shared<lambertian>(pertext)));
@@ -221,9 +228,10 @@ inline void simple_light(hittable_list& world, camera& cam) {
     cam.lookat = point3(0, 2, 0);
     cam.vup = vec3(0, 1, 0);
     cam.defocus_angle = 0;
+    cam.out_file = _out;
 }
 
-inline void cornell_box(hittable_list& world, camera& cam) {
+inline void cornell_box(hittable_list& world, camera& cam, std::string _out) {
     auto red = make_shared<lambertian>(color(.65, .05, .05));
     auto white = make_shared<lambertian>(color(.73, .73, .73));
     auto green = make_shared<lambertian>(color(.12, .45, .15));
@@ -266,9 +274,10 @@ inline void cornell_box(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
 
     cam.defocus_angle = 0;
+    cam.out_file = _out;
 }
 
-inline void cornell_smok(hittable_list& world, camera& cam) {
+inline void cornell_smok(hittable_list& world, camera& cam, std::string _out) {
     auto red = make_shared<lambertian>(color(.65, .05, .05));
     auto white = make_shared<lambertian>(color(.73, .73, .73));
     auto green = make_shared<lambertian>(color(.12, .45, .15));
@@ -312,9 +321,11 @@ inline void cornell_smok(hittable_list& world, camera& cam) {
     cam.vup = vec3(0, 1, 0);
 
     cam.defocus_angle = 0;
+    cam.out_file = _out;
 }
 
-inline void final_scene(int image_width, int samples_per_pixel, int max_depth) {
+inline void final_scene(int image_width, int samples_per_pixel, int max_depth,
+                        std::string _out) {
     hittable_list boxes1;
     auto ground = make_shared<lambertian>(color(0.48, 0.83, 0.53));
 
@@ -394,6 +405,7 @@ inline void final_scene(int image_width, int samples_per_pixel, int max_depth) {
 
     cam.defocus_angle = 0;
 
+    cam.out_file = _out;
     cam.render(world);
 }
 #endif
