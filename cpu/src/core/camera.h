@@ -5,6 +5,11 @@
 #include "hittable/hittable.h"
 #include "materials/material.h"
 
+#include <fstream>
+#include <thread>
+#include <mutex>
+#include <chrono>
+
 class camera {
    public:
     double aspect_ratio = 1.0;    //  Ratio of image width over height
@@ -21,30 +26,95 @@ class camera {
     double focus_dist =
         10;    //  Distance from camera lookfrom point to plane of perfect focus
     color background;    //  Scene background color
-   public:
-    void render(const hittable& world) {
-        initialize();
+    std::string out_file = "tracer_image_out.ppm";
 
-        std::cout << "P3\n"
-                  << image_width << ' ' << m_image_height << "\n255\n";
+   public:
+    void render(const hittable& world, bool show_progress = true) {
+        std::ofstream _out(out_file);
+        if (!_out.is_open()) {
+            std::cerr << "Failed to open output file" << out_file
+                      << "\n dumping to std::cout\n";
+        }
+
+        std::ostream& out = _out.is_open() ? _out : std::cout;
+        initialize();
+        out << "P3\n" << image_width << ' ' << m_image_height << "\n255\n";
+
+        //  Pre-allocate buffer for all pixel colors
+        std::vector<color> pixel_buffer(image_width * m_image_height);
+
+        //  Get number of threads (usually CPU cores)
+        const unsigned int num_threads = std::thread::hardware_concurrency();
+        std::clog << "Num-threads " << num_threads << "\n";
+        std::vector<std::thread> threads;
+
+        auto start_time = std::chrono::high_resolution_clock::now();
+
+        //  Mutex for progress updates (only used if show_progress is true)
+        std::mutex progress_mutex;
+        int completed_rows = 0;
+
+        //  Function to render a chunk of rows
+        auto render_chunk = [&](int start_row, int end_row) {
+            for (int j = start_row; j < end_row; j++) {
+                for (int i = 0; i < image_width; i++) {
+                    color pixel_color{0, 0, 0};
+                    for (int sample = 0; sample < samples_per_pixel; sample++) {
+                        ray r = get_ray(i, j);
+                        pixel_color += ray_color(r, max_depth, world);
+                    }
+                    pixel_buffer[j * image_width + i] =
+                        m_pixel_samples_scale * pixel_color;
+                }
+                //  TODO: measure progress with and without mutex ✅
+                //    Update progress (thread-safe) - only if enabled
+                if (show_progress) {
+                    std::lock_guard<std::mutex> lock(progress_mutex);
+                    completed_rows++;
+                    std::clog << "\rScanlines remaining: "
+                              << (m_image_height - completed_rows) << ' '
+                              << std::flush;
+                }
+            }
+        };
+
+        //  Divide work among threads
+        int rows_per_thread = m_image_height / num_threads;
+        int remaining_rows = m_image_height % num_threads;
+
+        for (unsigned int t = 0; t < num_threads; t++) {
+            int start_row = t * rows_per_thread;
+            int end_row = start_row + rows_per_thread;
+
+            //  Give extra rows to the last thread
+            if (t == num_threads - 1) {
+                end_row += remaining_rows;
+            }
+
+            threads.emplace_back(render_chunk, start_row, end_row);
+        }
+
+        //  Wait for all threads to complete
+        for (auto& thread : threads) {
+            thread.join();
+        }
 
         for (int j = 0; j < m_image_height; j++) {
-            std::clog << "\rScanlines remaining: " << (m_image_height - j)
-                      << ' ' << std::flush;
-
             for (int i = 0; i < image_width; i++) {
-                color pixel_color{0, 0, 0};
-                for (int sample = 0; sample < samples_per_pixel; sample++) {
-                    ray r = get_ray(i, j);
-                    pixel_color +=
-                        ray_color(r, max_depth,
-                                  world);    //  average out later while writing
-                }
-                write_color(std::cout, m_pixel_samples_scale * pixel_color);
+                write_color(out, pixel_buffer[j * image_width + i]);
             }
         }
+
         std::cout.flush();
-        std::clog << "\rDone.                 \n";
+
+        auto end_time = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+            end_time - start_time);
+
+        if (show_progress) {
+            std::clog << "\rDone.                 \n";
+        }
+        std::clog << "Render time: " << duration.count() << " ms" << std::endl;
     }
 
    private:
